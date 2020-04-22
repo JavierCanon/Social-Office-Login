@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Version>0.1.5</Version>
+    <Company>asiknow.it</Company>
+    <PackageLicenseUrl>https://github.com/goldenass/AsIKnow.SocialHelpers/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/goldenass/AsIKnow.SocialHelpers</PackageProjectUrl>
+    <PackageTags>social</PackageTags>
+    <Description>Social helpers library</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.Instagram" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Identity">
+      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.identity\2.0.1\lib\netstandard2.0\Microsoft.AspNetCore.Identity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (&#xD;&#xA;cd &quot;$(SolutionDir)..\build&quot;&#xD;&#xA;del /F $(ProjectName).*&#xD;&#xA;cd &quot;$(ProjectDir)&quot; &#xD;&#xA;dotnet pack --output &quot;$(SolutionDir)..\build&quot;&#xD;&#xA;)" />
+  </Target>
+
+</Project>

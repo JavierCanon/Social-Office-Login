@@ -1,0 +1,37 @@
+trigger:
+    - master
+
+strategy:
+    matrix:
+        linux:
+            imageName: 'ubuntu-latest'
+        windows:
+            imageName: 'windows-latest'
+
+pool:
+    vmImage: $(imageName)
+
+variables:
+    buildConfiguration: 'Release'
+
+steps:
+    - task: NugetToolInstaller@1
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: restore
+        projects: './IPBanTests/IPBanTests.csproj'
+
+    - script: sudo apt-get install -q -y iptables; sudo apt-get install -q -y ipset; sudo apt-get update
+      displayName: 'Install dependencies on Linux'
+      condition: contains( variables['Agent.OS'], 'Linux' )
+
+    - script: dotnet build --configuration $(buildConfiguration) ./IPBanTests/IPBanTests.csproj
+      displayName: 'Build All'
+
+    - script: sudo dotnet test --configuration $(buildConfiguration) ./IPBanTests/IPBanTests.csproj
+      displayName: 'Test Linux'
+      condition: contains( variables['Agent.OS'], 'Linux' )
+
+    - script: dotnet test --configuration $(buildConfiguration) ./IPBanTests/IPBanTests.csproj
+      displayName: 'Test Windows'
+      condition: contains( variables['Agent.OS'], 'Windows' )

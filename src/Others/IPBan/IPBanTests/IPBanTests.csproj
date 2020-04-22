@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>DigitalRuby.IPBanTests</RootNamespace>
+    <AssemblyName>DigitalRuby.IPBanTests</AssemblyName>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <LangVersion>latest</LangVersion>
+    <Version>1.5.5</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="package\**" />
+    <EmbeddedResource Remove="package\**" />
+    <None Remove="package\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.6.0" />
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IPBanCore\IPBanCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\LogFiles\Exchange\smtp_auth_successful.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\LogFiles\Exchange\smtp_auth_unsuccessful.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
